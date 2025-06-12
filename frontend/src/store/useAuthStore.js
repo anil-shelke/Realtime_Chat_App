@@ -37,7 +37,7 @@ export const useAuthStore = create((set,get) => ({
             get().connectSocket()
             
         } catch (error) {
-            toast.error(error.response.data.message)
+            toast.error(error.response)
         }
         finally{
             set({isSigningUp: false})
@@ -64,8 +64,8 @@ export const useAuthStore = create((set,get) => ({
             toast.success("login successfully");
             get().connectSocket()
         } catch (error) {
-            console.error('Login failed:', error.response?.data || error.message);
-             toast.error(error.response?.data?.message || 'Login failed');
+            console.error('Login failed:', error);
+             toast.error(error || 'Login failed');
         }
         finally{
             set({isLoggingIn: false})
@@ -90,7 +90,7 @@ export const useAuthStore = create((set,get) => ({
     const {authUser} = get()
     if(!authUser || get().socket?.connected) return;
 
-    const socket = io(BASE_URL, {
+    const socket = io(baseURL, {
         query: {
             userId: authUser._id,
         }, 
