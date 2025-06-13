@@ -8,7 +8,14 @@ import path from "path"
 import { connectDB } from "./lib/db.js";
 import authRoutes from "./routes/auth.route.js"
 import messageRoutes from "./routes/message.route.js"
-import {app, server} from "./lib/socket.js"
+// import {app, server} from "./lib/socket.js"
+
+import { createServer } from "http";
+import { setupSocket } from "./lib/socket.js";
+
+const app = express();
+const server = createServer(app);
+setupSocket(server); 
 
 dotenv.config();
 
